@@ -1,11 +1,36 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css'; 
 
 const Navbar = ({ user, onLogout }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const location = useLocation();
+
+  // Close the menus whenever the user navigates to another page.
+  const [lastPath, setLastPath] = useState(location.pathname);
+  if (location.pathname !== lastPath) {
+    setLastPath(location.pathname);
+    setMenuOpen(false);
+    setMoreOpen(false);
+  }
+
   return (
     <nav className="navbar">
-      <ul className="nav-list">
+      <div className="nav-header">
+        <Link to="/" className="nav-brand">Fulton Mind Matters</Link>
+        <button
+          type="button"
+          className="nav-toggle"
+          aria-expanded={menuOpen}
+          aria-controls="nav-list"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span aria-hidden="true">{menuOpen ? '✕' : '☰'}</span>
+          <span className="nav-toggle-label">Menu</span>
+        </button>
+      </div>
+      <ul id="nav-list" className={`nav-list${menuOpen ? ' open' : ''}`}>
         <li className="nav-item">
           <Link to="/home">Home</Link>
         </li>
@@ -21,8 +46,15 @@ const Navbar = ({ user, onLogout }) => {
         <li className="nav-item">
           <Link to="/health"> Support HealthCare Workers </Link>
         </li>
-        <li className="nav-item dropdown">
-          More Resources
+        <li className={`nav-item dropdown${moreOpen ? ' open' : ''}`}>
+          <button
+            type="button"
+            className="dropdown-toggle"
+            aria-expanded={moreOpen}
+            onClick={() => setMoreOpen(!moreOpen)}
+          >
+            More Resources <span aria-hidden="true">▾</span>
+          </button>
           <ul className="dropdown-content">
             <li><Link to="/shelter">Shelter</Link></li>
             <li><Link to="/family">Family Resources</Link></li>

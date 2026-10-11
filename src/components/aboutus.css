@@ -31,3 +31,16 @@ h2 {
   .aboutus {
     box-shadow: 0 4px 16px rgba(179, 145, 145, 0.1);
   }
+
+@media (max-width: 600px) {
+  .aboutus {
+    margin: 1em 12px;
+    padding: 1.25em;
+    font-size: 1.05rem;
+  }
+
+  .aboutus h1 {
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+}
