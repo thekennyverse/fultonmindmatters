@@ -12,13 +12,13 @@ import New from './new';
 import Health from './health';
 import Footer from './footer';
 
-export default function Paths() {
+export default function Paths({ user, onLogout }) {
 
   return (
     <BrowserRouter className="container">
 
 
-      <Navbar />
+      <Navbar user={user} onLogout={onLogout} />
       
       
       <Routes>

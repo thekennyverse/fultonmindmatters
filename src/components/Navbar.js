@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css'; 
 
-const Navbar = () => {
+const Navbar = ({ user, onLogout }) => {
   return (
     <nav className="navbar">
       <ul className="nav-list">
@@ -32,6 +32,14 @@ const Navbar = () => {
         <li className="nav-item">
           <Link to="/contact">Contact</Link>
         </li>
+        {user && (
+          <li className="nav-item nav-account">
+            {user.username && <span>Hi, {user.username}</span>}
+            <button type="button" className="nav-logout" onClick={onLogout}>
+              {user.guest ? 'Log in' : 'Log out'}
+            </button>
+          </li>
+        )}
       </ul>
     </nav>
   );
