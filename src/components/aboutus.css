@@ -44,3 +44,9 @@ h2 {
     line-height: 1.2;
   }
 }
+
+.inline-link {
+  color: #1a3fb8;
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
