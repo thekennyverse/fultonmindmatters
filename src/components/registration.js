@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import './registration.css';
+import { API_URL } from '../config';
 
 
 
@@ -10,6 +11,8 @@ const Registration = ({setIsLoggedIn, setToggleLogin}) => {
     email: '',
     password: '',
   });
+
+  const [error, setError] = useState('');
 
   const handleOnClick = () => {
     setToggleLogin(true);
@@ -30,20 +33,25 @@ const Registration = ({setIsLoggedIn, setToggleLogin}) => {
 
     const method = "POST";
     const body = JSON.stringify(formData);
-    const url = 'http://localhost:4000/register';
+    const url = `${API_URL}/register`;
     const headers = {
       'Content-Type': 'application/json',
     };
 
-    const response = await fetch(url, {
-      method,
-      headers,
-      body
-    });
+    setError('');
+    try {
+      const response = await fetch(url, {
+        method,
+        headers,
+        body
+      });
 
-    console.log("register res: ", response)
-    const data = await response.json();
-    setIsLoggedIn(data.authenticated)
+      const data = await response.json();
+      if (!data.authenticated) setError(data.error || 'Registration failed.');
+      setIsLoggedIn(data.authenticated)
+    } catch (err) {
+      setError('Could not reach the server. Please try again later.');
+    }
   }
 
   return (
@@ -61,6 +69,7 @@ const Registration = ({setIsLoggedIn, setToggleLogin}) => {
         </div>
         <button type="submit">Register</button>
       </form>
+      {error && <p className="error" role="alert">{error}</p>}
       <button onClick={handleOnClick} className="signup">Have an account? Sign in</button>
     </div>
     </div>

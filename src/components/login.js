@@ -3,6 +3,7 @@
 import React, {useState} from 'react'
 
 import './login.css';
+import { API_URL } from '../config';
 
 function Login({setIsLoggedIn, setToggleLogin}) {
 
@@ -10,6 +11,8 @@ function Login({setIsLoggedIn, setToggleLogin}) {
     username: '',
     password: ''
   })
+
+  const [error, setError] = useState('');
 
   const handleOnClick = () => {
     setToggleLogin(false);
@@ -30,19 +33,25 @@ function Login({setIsLoggedIn, setToggleLogin}) {
 
     const method = "POST";
     const body = JSON.stringify(formData);
-    const url = 'http://localhost:4000/login';
+    const url = `${API_URL}/login`;
     const headers = {
       'Content-Type': 'application/json',
     };
 
-    const response = await fetch(url, {
-      method,
-      headers,
-      body
-    });
+    setError('');
+    try {
+      const response = await fetch(url, {
+        method,
+        headers,
+        body
+      });
 
-    const data = await response.json();
-    setIsLoggedIn(data.authenticated)
+      const data = await response.json();
+      if (!data.authenticated) setError(data.error || 'Incorrect username or password.');
+      setIsLoggedIn(data.authenticated)
+    } catch (err) {
+      setError('Could not reach the server. Please try again later.');
+    }
   }
 
 
@@ -57,6 +66,7 @@ function Login({setIsLoggedIn, setToggleLogin}) {
         <input type="password" placeholder="Password" value={formData.password} onChange={handleOnChange}/>
         <button type="submit">Log In</button>
       </form>
+      {error && <p className="error" role="alert">{error}</p>}
       <button onClick={handleOnClick} className="signup">Not signed up?</button>
     </div>
     </div>
