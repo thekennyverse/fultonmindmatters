@@ -1,4 +1,5 @@
 import React from 'react';
+import Linkify from './linkify';
 
 function Family() {
   const resources = [
@@ -65,7 +66,7 @@ function Family() {
       <ul className="resource-list">
         {resources.map((resource, index) => (
           <li key={index}>
-            <strong>{resource.name}</strong>: {resource.details}
+            <strong>{resource.name}</strong>: <Linkify text={resource.details} />
           </li>
         ))}
       </ul>
@@ -73,7 +74,7 @@ function Family() {
       <ul className="resource-list">
         {shelters.map((shelter, index) => (
           <li key={index}>
-            <strong>{shelter.name}</strong>: {shelter.details}
+            <strong>{shelter.name}</strong>: <Linkify text={shelter.details} />
           </li>
         ))}
       </ul>
@@ -81,7 +82,7 @@ function Family() {
       <ul className="resource-list">
         {domesticViolence.map((dv, index) => (
           <li key={index}>
-            <strong>{dv.name}</strong>: {dv.details}
+            <strong>{dv.name}</strong>: <Linkify text={dv.details} />
           </li>
         ))}
       </ul>

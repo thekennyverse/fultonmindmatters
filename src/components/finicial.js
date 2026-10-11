@@ -1,4 +1,5 @@
 import React from 'react';
+import Linkify from './linkify';
 
 function Finances() {
   const additionalResources = [
@@ -11,8 +12,8 @@ function Finances() {
       details: 'Contact: 1-800-662-4357. Website: https://www.samhsa.gov/find-help/national-helpline',
     },
     {
-      name: 'National Suicide Prevention Lifeline',
-      details: 'Contact: 1-800-273-8255. Website: https://suicidepreventionlifeline.org',
+      name: '988 Suicide & Crisis Lifeline',
+      details: 'Call or text 988, or chat online, 24/7. Website: https://988lifeline.org',
     },
     {
       name: 'Westside Future Fund',
@@ -38,7 +39,7 @@ function Finances() {
       <ul className="resource-list">
         {additionalResources.map((resource, index) => (
           <li key={index}>
-            <strong>{resource.name}</strong>: {resource.details}
+            <strong>{resource.name}</strong>: <Linkify text={resource.details} />
           </li>
         ))}
       </ul>
@@ -46,7 +47,7 @@ function Finances() {
       <ul className="resource-list">
         {financialAssistance.map((assistance, index) => (
           <li key={index}>
-            <strong>{assistance.name}</strong>: {assistance.details}
+            <strong>{assistance.name}</strong>: <Linkify text={assistance.details} />
           </li>
         ))}
       </ul>

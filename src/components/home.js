@@ -58,21 +58,19 @@ const questions = [
 ];
 
 function Home() {
-  const [quest, setQuest] = useState(questions);
+  const quest = questions;
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [showExplanation, setShowExplanation] = useState(false);
   const [showThanks, setShowThanks] = useState(false);
-  const [event, SetEvent] = useState(null);
 
-  const handleAnswerSelect = (selectedAnswer, event) => {
+  const handleAnswerSelect = (selectedAnswer) => {
     const updatedAnswers = [...userAnswers, selectedAnswer];
     setUserAnswers(updatedAnswers);
     setShowExplanation(true);
   };
 
   const nextQuestion = () => {
-    SetEvent(null)
     if (currentQuestion + 1 >= quest.length) {
       setShowThanks(true);
       setShowExplanation(false);
@@ -123,14 +121,14 @@ function Home() {
           <div className="options">
             {questions[currentQuestion].options.map((option, index) => (
               <div key={index} className="option">
-                {showExplanation == false ?
+                {!showExplanation ?
                 <>
                   <input
                     type="radio"
                     id={`option${index}`}
                     name="quizOption"
                     value={option}
-                    onChange={(e) => handleAnswerSelect(option, e)}
+                    onChange={() => handleAnswerSelect(option)}
                   />
                   <label htmlFor={`option${index}`}>{option}</label>
                 </>
@@ -142,7 +140,7 @@ function Home() {
           </div>
         </>
         )}
-        {showExplanation && showThanks == false && (
+        {showExplanation && !showThanks && (
           <div className="explanation">
             <p><strong>Correct Answer:</strong> {questions[currentQuestion].correctAnswer}</p>
             <p><em>Explanation:</em> {questions[currentQuestion].explanation}</p>

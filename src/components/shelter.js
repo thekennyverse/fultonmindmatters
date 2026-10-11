@@ -1,4 +1,5 @@
 import React from 'react';
+import Linkify from './linkify';
 
 
 function Shelters() {
@@ -89,7 +90,7 @@ function Shelters() {
           <li key={index} className="shelter-item">
             <strong>{shelter.name}</strong>
             {shelter.address && <p><strong>Address:</strong> {shelter.address}</p>}
-            {shelter.phone && <p><strong>Phone:</strong> {shelter.phone}</p>}
+            {shelter.phone && <p><strong>Phone:</strong> <Linkify text={shelter.phone} /></p>}
           </li>
         ))}
       </ul>
