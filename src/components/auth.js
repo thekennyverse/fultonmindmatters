@@ -47,6 +47,7 @@ export default function Auth({ onLogin, onGuest }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
+      if (response.status >= 500) throw new Error(`Server error ${response.status}`);
       const data = await response.json();
 
       if (data.authenticated) {
